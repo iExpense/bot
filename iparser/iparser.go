@@ -34,7 +34,7 @@ func Parse(line string) (*Command, error) {
 		return nil, ErrorEmptyCmd
 	}
 
-	switch cmd := tokens[0]; cmd {
+	switch cmd := tokens[0]; {
 	case strings.HasPrefix("transfer", cmd):
 		return parseTransfer(tokens[1:])
 	case strings.HasPrefix("income", cmd):

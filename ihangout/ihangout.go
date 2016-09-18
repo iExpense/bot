@@ -2,8 +2,8 @@ package ihangout
 
 import (
 	"fmt"
-	"time"
 	"log"
+	"time"
 
 	"github.com/spf13/viper"
 )
