@@ -2,7 +2,13 @@ package iparser
 
 import (
 	"log"
-  "testing"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+var (
+	cCommandNil = (*Command)(nil)
 )
 
 func check(message string, err error, t *testing.T) {
@@ -21,6 +27,10 @@ func tear(t *testing.T) {
 }
 
 func TestTest(t *testing.T) {
-  setup(t)
-  defer tear(t)
+	setup(t)
+	defer tear(t)
+
+	cmd, err := Parse("transfer 100 #sbi #cash")
+	check("parse returned error", err, t)
+	assert.Equal(t, cmd, cCommandNil)
 }
