@@ -19,8 +19,14 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	log.Println("[INFO] adding signal handler for SIGTERM")
 
+	ihangoutBot, err := ihangout.NewBot()
+	if err != nil {
+		log.Println("[ERROR] unable to create ihangout bot")
+		panic(err)
+	}
+
 	supervisor := suture.NewSimple("bot")
-	supervisor.Add(&ihangout.Bot{})
+	supervisor.Add(ihangoutBot)
 	go supervisor.ServeBackground()
 	log.Printf("[INFO] running supervisor: %v", supervisor)
 

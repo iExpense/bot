@@ -1,1 +1,4 @@
 logfolder: /var/log/bot
+hangout:
+  username: user
+  password: pass
