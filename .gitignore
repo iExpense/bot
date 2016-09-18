@@ -22,3 +22,10 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# configuration and log files
+*.yaml
+log/*
+
+# Intellij Project files
+.idea/*
