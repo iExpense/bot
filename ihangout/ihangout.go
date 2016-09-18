@@ -3,8 +3,8 @@ package ihangout
 import (
 	"fmt"
 	"time"
+	"log"
 
-	"github.com/mattn/go-xmpp"
 	"github.com/spf13/viper"
 )
 
@@ -15,35 +15,38 @@ const (
 )
 
 type Bot struct {
-	client *xmpp.Client
+	quit chan interface{}
 }
 
 func NewBot() (*Bot, error) {
 	username := viper.GetString("hangout.username")
 	password := viper.GetString("hangout.password")
 	host := fmt.Sprintf("%s:%s", cHangoutHost, cHangoutPort)
-	client, err := xmpp.NewClient(host, username, password, true)
-	if err != nil {
-		return nil, err
-	}
+	log.Printf("user: %s, pass: %s, host:%s", username, password, host)
 
 	return &Bot{
-		client: client,
-	}
+		quit: make(chan interface{}, 0),
+	}, nil
 }
 
 func (b *Bot) String() string {
-	return fmt.Printf("client: %v", b.client)
+	return fmt.Sprintf("")
 }
 
 func (b *Bot) Serve() {
 	ticker := time.NewTicker(cPresencePeriod * time.Second)
-	select {
-	case <-ticker.C:
-		b.client.SendPresence(xmpp.Presence{})
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			log.Println("send presence here")
+		case <-b.quit:
+			return
+		}
 	}
 }
 
 func (b *Bot) Stop() {
-	b.client.Close()
+	close(b.quit)
 }
