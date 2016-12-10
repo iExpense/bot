@@ -43,7 +43,9 @@ func setupLogging() error {
 	logFolder := getLogFolder()
 	_, err := os.Stat(logFolder)
 	if err != nil {
-		if strings.Contains(err.Error(), "cannot find the") {
+		if strings.Contains(err.Error(), "cannot find the") ||
+			strings.Contains(err.Error(), "no such file or directory") {
+
 			errDir := os.MkdirAll(logFolder, os.FileMode(cFilePerm))
 			if errDir != nil {
 				log.Println("[ERROR] unable to create app folder")

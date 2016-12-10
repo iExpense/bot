@@ -7,7 +7,7 @@ import (
 	"syscall"
 
 	"github.com/iexpense/bot/iconf"
-	"github.com/iexpense/bot/ihangout"
+	"github.com/iexpense/bot/imessenger"
 	"github.com/thejerf/suture"
 )
 
@@ -19,14 +19,14 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	log.Println("[INFO] adding signal handler for SIGTERM")
 
-	ihangoutBot, err := ihangout.NewBot()
+	imessengerBot, err := imessenger.NewBot()
 	if err != nil {
-		log.Println("[ERROR] unable to create ihangout bot")
+		log.Println("[ERROR] unable to create imessenger bot")
 		panic(err)
 	}
 
 	supervisor := suture.NewSimple("bot")
-	supervisor.Add(ihangoutBot)
+	supervisor.Add(imessengerBot)
 	go supervisor.ServeBackground()
 	log.Printf("[INFO] running supervisor: %v", supervisor)
 
