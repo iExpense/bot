@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/mangalaman93/messenger"
 	"github.com/spf13/viper"
-	"gopkg.in/maciekmm/messenger-platform-go-sdk.v4"
 )
 
 type Bot struct {
@@ -30,41 +30,30 @@ func NewBot() (*Bot, error) {
 		return nil, fmt.Errorf("key %s is empty", listenPort)
 	}
 
-	imessenger := &messenger.Messenger{
-		AccessToken: accessToken,
-		VerifyToken: verifyToken,
-	}
-
 	return &Bot{
-		imessenger: imessenger,
-		quit:       make(chan interface{}, 0),
+		imessenger: messenger.New(messenger.Options{
+			Verify:      false,
+			VerifyToken: verifyToken,
+			Token:       accessToken,
+		}),
+		quit: make(chan interface{}, 0),
 	}, nil
-}
-
-func (b *Bot) String() string {
-	return fmt.Sprintf("")
-}
-
-func (b *Bot) MessageReceived(event messenger.Event, opts messenger.MessageOpts, msg messenger.ReceivedMessage) {
-	profile, err := b.imessenger.GetProfile(opts.Sender.ID)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	resp, err := b.imessenger.SendSimpleMessage(opts.Sender.ID, fmt.Sprintf("Hello, %s %s, %s", profile.FirstName, profile.LastName, msg.Text))
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Printf("%+v", resp)
 }
 
 func (b *Bot) Serve() {
 	listenPort := viper.GetString("port")
-	b.imessenger.MessageReceived = b.MessageReceived
-	http.HandleFunc("/webhook", b.imessenger.Handler)
+
+	b.imessenger.HandleMessage(func(m messenger.Message, r *messenger.Response) {
+		p, err := b.imessenger.ProfileByID(m.Sender.ID)
+		if err != nil {
+			fmt.Println("[ERROR] Could not get user profile ::", err)
+		}
+		r.Text(fmt.Sprintf("Hello, %v!", p.FirstName))
+	})
 
 	// TODO: use stoppable server
-	log.Fatal(http.ListenAndServe(":"+listenPort, nil))
+	log.Println("[INFO] Serving messenger bot on port=" + listenPort)
+	log.Fatal(http.ListenAndServe(":"+listenPort, b.imessenger.Handler()))
 }
 
 func (b *Bot) Stop() {

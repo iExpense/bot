@@ -69,16 +69,16 @@
 			"revisionTime": "2016-12-01T14:17:04Z"
 		},
 		{
-			"checksumSHA1": "MlDHGXm//SRQU/ezofWT4uSDkQc=",
-			"path": "github.com/maciekmm/messenger-platform-go-sdk/template",
-			"revision": "71a3a43148e3c5a2d20ceb133aed0faefd92ed34",
-			"revisionTime": "2016-12-05T18:10:44Z"
-		},
-		{
 			"checksumSHA1": "506eXGmFfB7mgzbMcsdT/UAXJgI=",
 			"path": "github.com/magiconair/properties",
 			"revision": "9c47895dc1ce54302908ab8a43385d1f5df2c11c",
 			"revisionTime": "2016-11-28T00:34:34Z"
+		},
+		{
+			"checksumSHA1": "boTvYajdKv6HNdpnQWPHjDcM/rI=",
+			"path": "github.com/mangalaman93/messenger",
+			"revision": "1145fe35249f8ce14d3c0a52544e4a4babdc15a4",
+			"revisionTime": "2017-01-22T13:49:16Z"
 		},
 		{
 			"checksumSHA1": "oouYEOJ4wFLlCWEgNy7/MWIzAfg=",
@@ -157,12 +157,6 @@
 			"path": "golang.org/x/text/unicode/norm",
 			"revision": "47a200a05c8b3fd1b698571caecbb68beb2611ec",
 			"revisionTime": "2016-11-30T21:25:21Z"
-		},
-		{
-			"checksumSHA1": "vffniIwVTKvfmIAU81XSSczfRxI=",
-			"path": "gopkg.in/maciekmm/messenger-platform-go-sdk.v4",
-			"revision": "0cb6e825b6fb086b37ffee383ed3057f3a706d0c",
-			"revisionTime": "2016-08-25T11:18:41Z"
 		},
 		{
 			"checksumSHA1": "Glsug+ZroyZo2Ucr8VZJFYatmjQ=",
