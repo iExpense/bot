@@ -26,6 +26,7 @@ _testmain.go
 # configuration and log files
 *.yaml
 log/*
+.env
 
 # Intellij Project files
 .idea/*

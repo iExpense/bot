@@ -15,23 +15,24 @@ const (
 	cConfFile         = "botconf"
 	cConfPath         = "/etc/bot"
 	cLogFile          = "bot.log"
-	cFilePerm         = 640
+	cFilePerm         = 0777
 	cLogFileMaxSize   = 50 // MB
 	cLogMaxNumBackups = 5
 	cLogFileMaxAge    = 30 // days
 )
 
 func Init() error {
-	// Read configuration file
 	viper.SetConfigType(cConfType)
 	viper.SetConfigName(cConfFile)
 	viper.AddConfigPath(cConfPath)
-	viper.AddConfigPath(".") // for development
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Println("[ERROR] unable to read configuration file")
-		panic(err)
+		log.Println("[WARN] no configuration file loaded")
 	}
+
+	// enable reading from environment variable
+	viper.AutomaticEnv()
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	// Setup logging
 	return setupLogging()
@@ -39,6 +40,10 @@ func Init() error {
 
 func setupLogging() error {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
+
+	if isLogsToStdout() {
+		return nil
+	}
 
 	logFolder := getLogFolder()
 	_, err := os.Stat(logFolder)
@@ -48,13 +53,13 @@ func setupLogging() error {
 
 			errDir := os.MkdirAll(logFolder, os.FileMode(cFilePerm))
 			if errDir != nil {
-				log.Println("[ERROR] unable to create app folder")
+				log.Println("[ERROR] unable to create log folder")
 				panic(errDir)
 			} else {
 				log.Println("[INFO] created log directory")
 			}
 		} else {
-			log.Println("[ERROR] unable to get app folder stats")
+			log.Println("[ERROR] unable to get log folder stats")
 			panic(err)
 		}
 	} else {
@@ -74,6 +79,11 @@ func setupLogging() error {
 	return nil
 }
 
+func isLogsToStdout() bool {
+	logToStdout := viper.GetString("log_stdout")
+	return !(logToStdout == "" || logToStdout == "false")
+}
+
 func getLogFolder() string {
-	return viper.GetString("logfolder")
+	return viper.GetString("log_folder")
 }

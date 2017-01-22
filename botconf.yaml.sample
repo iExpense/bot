@@ -1,4 +1,6 @@
-logfolder: /var/log/bot
-hangout:
-  username: user
-  password: pass
+log_folder: /var/log/bot
+log_stdout: false
+port: 80
+messenger:
+    verify_token: token
+    access_token: access
