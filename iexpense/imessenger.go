@@ -1,4 +1,4 @@
-package imessenger
+package iexpense
 
 import (
 	"fmt"
@@ -42,14 +42,7 @@ func NewBot() (*Bot, error) {
 
 func (b *Bot) Serve() {
 	listenPort := viper.GetString("port")
-
-	b.imessenger.HandleMessage(func(m messenger.Message, r *messenger.Response) {
-		p, err := b.imessenger.ProfileByID(m.Sender.ID)
-		if err != nil {
-			fmt.Println("[ERROR] Could not get user profile ::", err)
-		}
-		r.Text(fmt.Sprintf("Hello, %v!", p.FirstName))
-	})
+	b.imessenger.HandleMessage(b.HandleReceivedMessage)
 
 	// TODO: use stoppable server
 	log.Println("[INFO] Serving messenger bot on port=" + listenPort)
