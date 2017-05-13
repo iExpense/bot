@@ -1,4 +1,4 @@
-package iexpense
+package ibot
 
 import (
 	"fmt"

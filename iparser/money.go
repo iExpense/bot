@@ -1,4 +1,4 @@
-package iexpense
+package iparser
 
 import (
 	"errors"
@@ -18,7 +18,7 @@ var (
 	ErrorInvalidAmount = errors.New("Invalid amount specified")
 )
 
-func Parse(str string) (*Money, error) {
+func NewMoney(str string) (*Money, error) {
 	var val, cents int64
 	var valStr, centsStr string
 	var negativeAmount bool
@@ -85,7 +85,7 @@ func Parse(str string) (*Money, error) {
 }
 
 func (m Money) String() string {
-	return fmt.Sprintf("%s.%s", m.val, m.cents)
+	return fmt.Sprintf("%d.%d", m.val, m.cents)
 }
 
 func (m *Money) ensure() {

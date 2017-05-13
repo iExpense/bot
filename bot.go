@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/iexpense/bot/ibot"
 	"github.com/iexpense/bot/iconf"
-	"github.com/iexpense/bot/iexpense"
 	"github.com/thejerf/suture"
 )
 
@@ -19,7 +19,7 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 	log.Println("[INFO] adding signal handler for SIGTERM")
 
-	imessengerBot, err := iexpense.NewBot()
+	imessengerBot, err := ibot.NewBot()
 	if err != nil {
 		log.Println("[ERROR] unable to create imessenger bot")
 		panic(err)

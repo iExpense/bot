@@ -19,7 +19,7 @@ const (
 
 type Command struct {
 	Ctype  CType
-	Amount string
+	Amount *Money
 	Tags   []string
 }
 
@@ -77,7 +77,11 @@ func parseExpense(args []string) (*Command, error) {
 		return nil, ErrorNeedArgs
 	}
 
-	amount := args[0]
+	amount, err := parseAmount(args[0])
+	if err != nil {
+		return nil, err
+	}
+
 	tags := make([]string, 0, len(args[1:]))
 	for _, arg := range args[1:] {
 		tags = append(tags, strings.TrimPrefix(arg, "#"))
@@ -97,7 +101,11 @@ func parseIncome(args []string) (*Command, error) {
 		return nil, ErrorNeedArgs
 	}
 
-	amount := args[0]
+	amount, err := parseAmount(args[0])
+	if err != nil {
+		return nil, err
+	}
+
 	tags := make([]string, 0, len(args[1:]))
 	for _, arg := range args[1:] {
 		tags = append(tags, strings.TrimPrefix(arg, "#"))
@@ -115,7 +123,11 @@ func parseTransfer(args []string) (*Command, error) {
 		return nil, ErrorNeedArgs
 	}
 
-	amount := args[0]
+	amount, err := parseAmount(args[0])
+	if err != nil {
+		return nil, err
+	}
+
 	fromAccount := strings.TrimPrefix(args[1], "#")
 	var toAccount string
 	if args[2] == ">" {
@@ -161,4 +173,8 @@ func parseBalance(args []string) (*Command, error) {
 
 func parseHelp(args []string) (*Command, error) {
 	return helpCommand, nil
+}
+
+func parseAmount(amount string) (*Money, error) {
+	return NewMoney(amount)
 }

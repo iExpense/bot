@@ -10,7 +10,7 @@ func TestExpense(t *testing.T) {
 	cmd, err := Parse("expense 100 #sbi #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Expense,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -18,7 +18,7 @@ func TestExpense(t *testing.T) {
 	cmd, err = Parse("e 100 sbi #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Expense,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -26,7 +26,7 @@ func TestExpense(t *testing.T) {
 	cmd, err = Parse("exp 100 #sbi")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Expense,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi"},
 	})
 	assert.Nil(t, err)
@@ -34,7 +34,7 @@ func TestExpense(t *testing.T) {
 	cmd, err = Parse("100 #sbi")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Expense,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi"},
 	})
 	assert.Nil(t, err)
@@ -60,7 +60,7 @@ func TestIncome(t *testing.T) {
 	cmd, err := Parse("income 100 #sbi #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Income,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -68,7 +68,7 @@ func TestIncome(t *testing.T) {
 	cmd, err = Parse("i 100 sbi #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Income,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -76,7 +76,7 @@ func TestIncome(t *testing.T) {
 	cmd, err = Parse("income 100 #sbi")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Income,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi"},
 	})
 	assert.Nil(t, err)
@@ -102,7 +102,7 @@ func TestTransfer(t *testing.T) {
 	cmd, err := Parse("transfer 100 #sbi #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Transfer,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -110,7 +110,7 @@ func TestTransfer(t *testing.T) {
 	cmd, err = Parse("tran 1 sbi cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Transfer,
-		Amount: "1",
+		Amount: &Money{1, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -118,7 +118,7 @@ func TestTransfer(t *testing.T) {
 	cmd, err = Parse("t 001 sbi > cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Transfer,
-		Amount: "001",
+		Amount: &Money{1, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
@@ -126,7 +126,7 @@ func TestTransfer(t *testing.T) {
 	cmd, err = Parse("t 100 #sbi > #cash")
 	assert.Equal(t, cmd, &Command{
 		Ctype:  Transfer,
-		Amount: "100",
+		Amount: &Money{100, 0},
 		Tags:   []string{"sbi", "cash"},
 	})
 	assert.Nil(t, err)
