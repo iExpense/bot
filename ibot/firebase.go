@@ -2,7 +2,7 @@ package ibot
 
 import (
 	"github.com/iexpense/bot/iparser"
-	"github.com/mangalaman93/messenger"
+	"github.com/paked/messenger"
 )
 
 func (b *Bot) HandleReceivedMessage(m messenger.Message, r *messenger.Response) {

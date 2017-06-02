@@ -72,29 +72,23 @@ func (r *Response) TextWithReplies(message string, replies []QuickReply) error {
 		Recipient: r.to,
 		Message: MessageData{
 			Text:         message,
+			Attachment:   nil,
 			QuickReplies: replies,
 		},
 	}
+	return r.DispatchMessage(&m)
+}
 
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
+// AttachmentWithReplies sends a attachment message with some replies
+func (r *Response) AttachmentWithReplies(attachment *StructuredMessageAttachment, replies []QuickReply) error {
+	m := SendMessage{
+		Recipient: r.to,
+		Message: MessageData{
+			Attachment:   attachment,
+			QuickReplies: replies,
+		},
 	}
-
-	req, err := http.NewRequest("POST", SendMessageURL, bytes.NewBuffer(data))
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.URL.RawQuery = "access_token=" + r.token
-
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
-	defer resp.Body.Close()
-
-	return err
+	return r.DispatchMessage(&m)
 }
 
 // Image sends an image.
@@ -121,26 +115,7 @@ func (r *Response) Attachment(dataType AttachmentType, url string) error {
 			},
 		},
 	}
-
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	req, err := http.NewRequest("POST", SendMessageURL, bytes.NewBuffer(data))
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.URL.RawQuery = "access_token=" + r.token
-
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
-	defer resp.Body.Close()
-
-	return err
+	return r.DispatchMessage(&m)
 }
 
 // AttachmentData sends an image, sound, video or a regular file to a chat via an io.Reader.
@@ -198,28 +173,7 @@ func (r *Response) ButtonTemplate(text string, buttons *[]StructuredMessageButto
 		},
 	}
 
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	req, err := http.NewRequest("POST", SendMessageURL, bytes.NewBuffer(data))
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.URL.RawQuery = "access_token=" + r.token
-
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	return checkFacebookError(resp.Body)
+	return r.DispatchMessage(&m)
 }
 
 // GenericTemplate is a message which allows for structural elements to be sent
@@ -237,29 +191,7 @@ func (r *Response) GenericTemplate(elements *[]StructuredMessageElement) error {
 			},
 		},
 	}
-
-	data, err := json.Marshal(m)
-	if err != nil {
-		return err
-	}
-
-	req, err := http.NewRequest("POST", SendMessageURL, bytes.NewBuffer(data))
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.URL.RawQuery = "access_token=" + r.token
-
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	return checkFacebookError(resp.Body)
+	return r.DispatchMessage(&m)
 }
 
 // SenderAction sends a info about sender action
@@ -268,7 +200,11 @@ func (r *Response) SenderAction(action string) error {
 		Recipient:    r.to,
 		SenderAction: action,
 	}
+	return r.DispatchMessage(&m)
+}
 
+// DispatchMessage posts the message to messenger, return the error if there's any
+func (r *Response) DispatchMessage(m interface{}) error {
 	data, err := json.Marshal(m)
 	if err != nil {
 		return err
@@ -282,14 +218,14 @@ func (r *Response) SenderAction(action string) error {
 	req.Header.Set("Content-Type", "application/json")
 	req.URL.RawQuery = "access_token=" + r.token
 
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-
+	if resp.StatusCode == 200 {
+		return nil
+	}
 	return checkFacebookError(resp.Body)
 }
 
@@ -299,10 +235,11 @@ type SendMessage struct {
 	Message   MessageData `json:"message"`
 }
 
-// MessageData is a text message with optional replies to be sent.
+// MessageData is a message consisting of text or an attachment, with an additional selection of optional quick replies.
 type MessageData struct {
-	Text         string       `json:"text,omitempty"`
-	QuickReplies []QuickReply `json:"quick_replies,omitempty"`
+	Text         string                       `json:"text,omitempty"`
+	Attachment   *StructuredMessageAttachment `json:"attachment,omitempty"`
+	QuickReplies []QuickReply                 `json:"quick_replies,omitempty"`
 }
 
 // SendStructuredMessage is a structured message template.
@@ -345,10 +282,14 @@ type StructuredMessageElement struct {
 
 // StructuredMessageButton is a response containing buttons
 type StructuredMessageButton struct {
-	Type    string `json:"type"`
-	URL     string `json:"url,omitempty"`
-	Title   string `json:"title"`
-	Payload string `json:"payload,omitempty"`
+	Type                string `json:"type"`
+	URL                 string `json:"url,omitempty"`
+	Title               string `json:"title,omitempty"`
+	Payload             string `json:"payload,omitempty"`
+	WebviewHeightRatio  string `json:"webview_height_ratio,omitempty"`
+	MessengerExtensions bool   `json:"messenger_extensions,omitempty"`
+	FallbackURL         string `json:"fallback_url,omitempty"`
+	WebviewShareButton  string `json:"webview_share_button,omitempty"`
 }
 
 // SendSenderAction is the information about sender action

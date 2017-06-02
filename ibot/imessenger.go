@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/mangalaman93/messenger"
+	"github.com/paked/messenger"
 	"github.com/spf13/viper"
 )
 

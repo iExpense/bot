@@ -75,16 +75,16 @@
 			"revisionTime": "2016-11-28T00:34:34Z"
 		},
 		{
-			"checksumSHA1": "boTvYajdKv6HNdpnQWPHjDcM/rI=",
-			"path": "github.com/mangalaman93/messenger",
-			"revision": "1145fe35249f8ce14d3c0a52544e4a4babdc15a4",
-			"revisionTime": "2017-01-22T13:49:16Z"
-		},
-		{
 			"checksumSHA1": "oouYEOJ4wFLlCWEgNy7/MWIzAfg=",
 			"path": "github.com/mitchellh/mapstructure",
 			"revision": "5a0325d7fafaac12dda6e7fb8bd222ec1b69875e",
 			"revisionTime": "2016-12-04T05:35:18Z"
+		},
+		{
+			"checksumSHA1": "cLKACGVQ9llsv6fxFS9MT8Wut1o=",
+			"path": "github.com/paked/messenger",
+			"revision": "64c15a121b44a038131924a44f170ef8a09fd00f",
+			"revisionTime": "2017-04-09T16:58:35Z"
 		},
 		{
 			"checksumSHA1": "8Y05Pz7onrQPcVWW6JStSsYRh6E=",
