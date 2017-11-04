@@ -80,8 +80,8 @@ func setupLogging() error {
 }
 
 func isLogsToStdout() bool {
-	logToStdout := viper.GetString("log_stdout")
-	return !(logToStdout == "" || logToStdout == "false")
+	logToStdout := viper.GetString("log_folder")
+	return logToStdout == ""
 }
 
 func getLogFolder() string {

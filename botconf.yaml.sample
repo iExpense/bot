@@ -1,5 +1,4 @@
 log_folder: /var/log/bot
-log_stdout: false
 port: 80
 messenger:
     verify_token: token
