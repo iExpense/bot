@@ -1,7 +1,7 @@
 {
 	"comment": "",
 	"heroku": {
-		"goVersion": "go1.7",
+		"goVersion": "go1.9",
 		"install": [
 			"./..."
 		]
@@ -141,7 +141,7 @@
 			"revisionTime": "2016-07-18T18:33:23Z"
 		},
 		{
-			"checksumSHA1": "8SH0adTcQlA+W5dzqiQ3Hft2VXg=",
+			"checksumSHA1": "i0hKmHe4W4RhpySKiqCL54Fmzqk=",
 			"path": "golang.org/x/sys/unix",
 			"revision": "478fcf54317e52ab69f40bb4c7a1520288d7f7ea",
 			"revisionTime": "2016-12-05T15:46:50Z"
@@ -149,26 +149,26 @@
 		{
 			"checksumSHA1": "ziMb9+ANGRJSSIuxYdRbA+cDRBQ=",
 			"path": "golang.org/x/text/transform",
-			"revision": "47a200a05c8b3fd1b698571caecbb68beb2611ec",
-			"revisionTime": "2016-11-30T21:25:21Z"
+			"revision": "88f656faf3f37f690df1a32515b479415e1a6769",
+			"revisionTime": "2017-10-26T07:52:28Z"
 		},
 		{
-			"checksumSHA1": "Vircurgvsnt4k26havmxPM67PUA=",
+			"checksumSHA1": "km/8bLtOpIP7sua4MnEmiSDYTAE=",
 			"path": "golang.org/x/text/unicode/norm",
-			"revision": "47a200a05c8b3fd1b698571caecbb68beb2611ec",
-			"revisionTime": "2016-11-30T21:25:21Z"
+			"revision": "88f656faf3f37f690df1a32515b479415e1a6769",
+			"revisionTime": "2017-10-26T07:52:28Z"
 		},
 		{
-			"checksumSHA1": "Glsug+ZroyZo2Ucr8VZJFYatmjQ=",
+			"checksumSHA1": "TM3Neoy1xRAKyZYMGzKc41sDFW4=",
 			"path": "gopkg.in/natefinch/lumberjack.v2",
-			"revision": "dd45e6a67c53f673bb49ca8a001fd3a63ceb640e",
-			"revisionTime": "2016-11-04T13:48:45Z"
+			"revision": "a96e63847dc3c67d17befa69c303767e2f84e54f",
+			"revisionTime": "2017-05-31T16:03:50Z"
 		},
 		{
-			"checksumSHA1": "12GqsW8PiRPnezDDy0v4brZrndM=",
+			"checksumSHA1": "fALlQNY1fM99NesfLJ50KguWsio=",
 			"path": "gopkg.in/yaml.v2",
-			"revision": "a5b47d31c556af34a302ce5d659e6fea44d90de0",
-			"revisionTime": "2016-09-28T15:37:09Z"
+			"revision": "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b",
+			"revisionTime": "2017-04-07T17:21:22Z"
 		}
 	],
 	"rootPath": "github.com/iexpense/bot"
