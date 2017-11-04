@@ -58,13 +58,13 @@ func NewMoney(str string) (*Money, error) {
 
 	val, err = strconv.ParseInt(valStr, 10, 64)
 	if err != nil {
-		log.Printf("[WARN] Unable to parse %s (amount: %s)\n", valStr, str)
+		log.Printf("[WARN] Unable to parse %s (amount: %s) :: %v\n", valStr, str, err)
 		return nil, ErrorInvalidAmount
 	}
 
 	cents, err = strconv.ParseInt(centsStr, 10, 64)
 	if err != nil {
-		log.Printf("[WARN] Unable to parse %s (amount: %s)\n", centsStr, str)
+		log.Printf("[WARN] Unable to parse %s (amount: %s) :: %v\n", centsStr, str, err)
 		return nil, ErrorInvalidAmount
 	}
 
