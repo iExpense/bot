@@ -17,17 +17,17 @@ type Bot struct {
 func NewBot() (*Bot, error) {
 	accessToken := viper.GetString("messenger.access_token")
 	if accessToken == "" {
-		return nil, fmt.Errorf("key %s is empty", accessToken)
+		return nil, fmt.Errorf("key messenger.access_token is empty")
 	}
 
 	verifyToken := viper.GetString("messenger.verify_token")
 	if verifyToken == "" {
-		return nil, fmt.Errorf("key %s is empty", verifyToken)
+		return nil, fmt.Errorf("key messenger.verify_token is empty")
 	}
 
 	listenPort := viper.GetString("port")
 	if listenPort == "" {
-		return nil, fmt.Errorf("key %s is empty", listenPort)
+		return nil, fmt.Errorf("key port is empty")
 	}
 
 	return &Bot{
